@@ -1,6 +1,7 @@
 import time as tm
 
 timers_seconds = int(input("Seconds for your timer: "))
+reminder = "Go for a run now!"
 
 while timers_seconds > 0:
     hours = int(timers_seconds/3600)
@@ -14,3 +15,6 @@ while timers_seconds > 0:
     tm.sleep(1)
     
     timers_seconds -= 1
+
+# Give the user some encouragement for the break time.
+print(reminder)
