@@ -2,9 +2,11 @@
 #include "stdio.h"
 #include "string.h"
 
+#define TRUE 1
+
 int main(void)
 {
-    while(1)
+    while(TRUE)
     {
         int studentID;
         char studentName[20];
@@ -26,6 +28,7 @@ int main(void)
         printf("Enter your password: ");
         scanf("%24s", checkPassword);
 
+        // If the passwords are the same
         if(strcmp(password, checkPassword) == 0){
             // create the new record in the file
             const char FILENAME[35] = "student_records.txt";
@@ -34,7 +37,7 @@ int main(void)
             fclose(filePointer);
 
             // clear the terminal
-            system("echo \"clearing screen\";sleep 2;clear");
+            system("echo \"clearing screen\";sleep 1;clear");
         } else {
             printf("Invalid password. Record couldn't be added. \n");
         }
