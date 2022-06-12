@@ -3,21 +3,55 @@
 #include <stdio.h>
 
 #define TRUE 1
+#define FALSE 0
 
 void writeRecord(const char[], const char[], long);
 void searchRecord(const char[]); // Search the phonebook's records.
 void viewPhonebook(const char[]); // Take a filename and grab all non-NULL records then read them.
 
 int printMenuAndGetInput();
-void decideWhatToDo(const char[], int); // passes a menu option to decide what to do.
+int decideWhatToDo(const char[], int); // passes a menu option to decide what to do.
 
 int main(void) {
     int userChoice;
     const char FILENAME[] = "phonebook.data";
 
-    while(TRUE) { // print the menu
+    // running flag
+    int running = TRUE;
+
+    // Authenticate the user.
+    char username[26];
+    char password[26];
+
+    char correctUsername[26] = "nikf";
+    char correctPassword[26] = "notaneasypassword";
+
+    printf("Username: ");
+    scanf("%25s", username);
+
+    if( strcmp(username, correctUsername) == FALSE ) {
+        printf("Password: ");
+        scanf("%25s", password);
+
+        if ( strcmp(password, correctPassword) == FALSE ) {
+            printf("Login successful. Welcome back, %s.\n", username);
+        } else {
+            // password failed
+            printf("The password failed. Try running again.\n");
+            running = FALSE;
+        }
+    } else {
+        // username failed
+        printf("The username failed. Try running again.\n");
+        running = FALSE;
+    }
+
+    while(running) { // print the menu
         userChoice = printMenuAndGetInput();
-        decideWhatToDo(FILENAME, userChoice);
+        int keepRunning = decideWhatToDo(FILENAME, userChoice);
+
+        // A simpler way to handle whether to stop the loop or not.
+        running = keepRunning;
     }
 }
 
@@ -52,26 +86,33 @@ int printMenuAndGetInput() {
     printf("2) Add phonebook record. \n");
     printf("3) Edit record.\n");
     printf("4) Delete record.\n");
+    printf("0) Exit.\n");
 
     scanf("%i", &usersChoice);
 
     return usersChoice;
 }
 
-void decideWhatToDo(const char FILENAME[], int choice) {
+int decideWhatToDo(const char FILENAME[], int choice) {
     switch (choice) {
         case 1:
             viewPhonebook(FILENAME);
-            break;
+            return 1;
         case 2:
             writeRecord(FILENAME, "Billy", 6513360790);
-            break;
+            return 1;
         case 3:
-            break;
+
+            return 1;
         case 4:
-            break;
+
+            return 1;
+        case 0:
+            // Tell the program to stop.
+            int running = FALSE;
+            return running;
         default:
             printf("Well, that's not a valid option. You'll have to try again. \n");
-            break;
+            return 1;
     }
 }
